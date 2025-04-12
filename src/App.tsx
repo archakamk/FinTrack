@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import ChatInput from './components/chatinput'
+import MessageBubble from './components/MessageBubble'
+import ResultPanel from './components/Metrics'
 import './styles/App.css'
 
 function App() {
@@ -18,48 +21,14 @@ function App() {
       
       <div className="chat-box">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`message ${msg.role}`}>
-            {msg.text}
-          </div>
+          <MessageBubble key={idx} role={msg.role} text={msg.text} />
         ))}
       </div>
 
+      {/* Insert the ResultPanel component here */}
+      <ResultPanel />
+
       <ChatInput onSend={handleSend} />
-    </div>
-  )
-}
-
-// Inline ChatInput definition:
-function ChatInput({ onSend }: { onSend: (text: string) => void }) {
-  const [input, setInput] = useState('')
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && input.trim()) {
-      onSend(input)
-      setInput('')
-    }
-  }
-
-  return (
-    <div className="chat-input-bar">
-      <input
-        className="chat-input"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder="e.g. Buy AAPL when RSI < 30"
-      />
-      <button
-        className="send-btn"
-        onClick={() => {
-          if (input.trim()) {
-            onSend(input)
-            setInput('')
-          }
-        }}
-      >
-        Send
-      </button>
     </div>
   )
 }
