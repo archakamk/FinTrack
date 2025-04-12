@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ChatInput from './components/ChatInput'
 import MessageBubble from './components/MessageBubble'
 import History from './components/History'
-// import Metrics from './components/Metrics' // Temporarily hidden
+// import Metrics from './components/Metrics' // Hidden for now
 import Spinner from './components/Spinner'
 import './styles/App.css'
 
