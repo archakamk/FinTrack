@@ -10,7 +10,7 @@
 .history-panel h2 {
   font-size: 1.25rem;
   margin-bottom: 1rem;
-  color: var(--color-accent, #38d9a9);
+  color: #38d9a9;
 }
 
 .history-item {
