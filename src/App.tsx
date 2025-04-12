@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import ChatInput from './components/ChatInput'
+import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
 // import History from './components/History'
 import Spinner from './components/Spinner'
