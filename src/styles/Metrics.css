@@ -1,23 +1,28 @@
-.metrics-container {
-    background-color: var(--color-panel);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-  }
-  
-  .metrics-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: 1rem;
-  }
-  
-  .chart-wrapper {
-    width: 100%;
-    height: 300px;
-    background-color: #ffffff10;
-    border-radius: 8px;
-    border: 1px solid #ffffff22;
-  }
-  
+.metrics-panel {
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.tab-buttons button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #eee;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tab-buttons .active {
+  background-color: #007bff;
+  color: white;
+}
+
+.tab-content {
+  margin-top: 1rem;
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: monospace;
+}

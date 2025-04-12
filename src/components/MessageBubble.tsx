@@ -1,14 +1,11 @@
-interface MessageBubbleProps {
-  role: 'user' | 'bot';
-  text: string;
-}
+import '../styles/MessageBubble.css'
 
-function MessageBubble({ role, text }: MessageBubbleProps) {
+function MessageBubble({ role, text }: { role: 'user' | 'bot'; text: string }) {
   return (
-    <div className={`message ${role}`}>
-      {text}
+    <div className={`message-bubble ${role}`}>
+      <p>{text}</p>
     </div>
-  );
+  )
 }
 
-export default MessageBubble;
+export default MessageBubble
