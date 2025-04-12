@@ -2,33 +2,64 @@ import { useState } from 'react'
 import './styles/App.css'
 
 function App() {
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<{ role: 'user' | 'bot', text: string }[]>([])
+
+  const handleSend = (text: string) => {
+    setMessages([
+      ...messages,
+      { role: 'user', text },
+      { role: 'bot', text: `Echo: ${text}` }
+    ])
+  }
 
   return (
-    <div className="app-container">
-      <h1>LLM Backtester Bot</h1>
-      <p>Type a stock strategy below to get started.</p>
-
-      {/* Placeholder for Chat UI */}
+    <div className="chat-wrapper">
+      <h1 className="header">LLM Backtester Bot</h1>
+      
       <div className="chat-box">
-        {messages.map((msg, index) => (
-          <div key={index} className="message">{msg}</div>
+        {messages.map((msg, idx) => (
+          <div key={idx} className={`message ${msg.role}`}>
+            {msg.text}
+          </div>
         ))}
       </div>
 
-      {/* This will later be ChatInput */}
+      <ChatInput onSend={handleSend} />
+    </div>
+  )
+}
+
+// Inline ChatInput definition:
+function ChatInput({ onSend }: { onSend: (text: string) => void }) {
+  const [input, setInput] = useState('')
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && input.trim()) {
+      onSend(input)
+      setInput('')
+    }
+  }
+
+  return (
+    <div className="chat-input-bar">
       <input
-        type="text"
         className="chat-input"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyPress}
         placeholder="e.g. Buy AAPL when RSI < 30"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            const target = e.target as HTMLInputElement;
-            setMessages([...messages, target.value]);
-            target.value = '';
+      />
+      <button
+        className="send-btn"
+        onClick={() => {
+          if (input.trim()) {
+            onSend(input)
+            setInput('')
           }
         }}
-      />
+      >
+        Send
+      </button>
     </div>
   )
 }
