@@ -18,15 +18,18 @@ body {
   font-size: 16px;
   line-height: 1.5;
   font-family: 'Poppins', 'Segoe UI', sans-serif;
+  overflow: hidden;
 }
 
 /* App layout */
 .app-container {
   display: flex;
   height: 100vh;
-  background-color: var(--color-bg);
+  background-color: transparent; /* transparent to show background */
   color: var(--color-text);
   font-family: 'Poppins', sans-serif;
+  position: relative;
+  z-index: 1;
 }
 
 /* Sidebar for history and title */
@@ -37,13 +40,17 @@ body {
   border-right: 1px solid #334155;
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 
 .site-title {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 800;
-  color: var(--color-accent);
+  background: linear-gradient(to right, #38d9a9, #66ffe3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 /* Main panel (chat + input) */
@@ -53,8 +60,9 @@ body {
   flex-direction: column;
   padding: 1rem 2rem;
   overflow-y: auto;
-  background-color: #0f172a;
+  background-color: transparent;
   position: relative;
+  z-index: 2;
 }
 
 /* Prompt above chat */
@@ -64,7 +72,7 @@ body {
 }
 
 .prompt-text {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--color-accent);
 }
@@ -88,7 +96,33 @@ a {
   color: var(--color-accent);
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
+}
+
+/* 🌌 Animated Background Overlay */
+.background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-image: url('/image.png'); /* from public folder */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  opacity: 0.08; /* Increase for visibility */
+  filter: blur(40px) brightness(0.9);
+  animation: float-bg 60s ease-in-out infinite;
+
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes float-bg {
+  0%   { transform: translate(0%, 0%); }
+  50%  { transform: translate(1.5%, 2%); }
+  100% { transform: translate(0%, 0%); }
 }
