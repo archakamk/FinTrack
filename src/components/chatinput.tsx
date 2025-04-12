@@ -1,38 +1,38 @@
 import { useState } from 'react'
+import '../styles/ChatInput.css' // Make sure file is named exactly like this
 
-interface ChatInputProps {
-  onSend: (message: string) => void
-}
-
-function ChatInput({ onSend }: ChatInputProps) {
+function ChatInput({ onSend }: { onSend: (msg: string) => void }) {
   const [input, setInput] = useState('')
 
-  const handleSend = () => {
-    if (input.trim()) {
+  const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && input.trim()) {
       onSend(input)
       setInput('')
     }
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') handleSend()
-  }
-
   return (
-    <div className="chat-input-container">
+    <div className="chat-input-wrapper">
       <input
+        className="chat-input"
         type="text"
-        className="chat-input-field"
+        placeholder="Ask something..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder="e.g. Buy TSLA when RSI < 30"
+        onKeyDown={handleKey}
       />
-      <button className="chat-send-button" onClick={handleSend}>
+      <button className="send-button" onClick={handleSend}>
         Send
       </button>
     </div>
   )
+
+  function handleSend() {
+    if (input.trim()) {
+      onSend(input)
+      setInput('')
+    }
+  }
 }
 
 export default ChatInput
