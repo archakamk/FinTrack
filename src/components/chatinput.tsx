@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import '../styles/chatinput.css'
+import '../styles/ChatInput.css'
 
 function ChatInput({ onSend }: { onSend: (msg: string) => void }) {
   const [input, setInput] = useState('')
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && input.trim()) {
-      handleSend()
+      onSend(input)
+      setInput('')
     }
   }
 
