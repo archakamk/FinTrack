@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import ChatInput from './components/ChatInput'
+import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
 // import History from './components/History'
 import Spinner from './components/Spinner'
 import './styles/App.css'
 
 function App() {
-  const [messages, setMessages] = useState<{ role: 'user' | 'bot', text: string }[]>([])
+  const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string }[]>([])
   const [loading, setLoading] = useState(false)
   const [showPrompt, setShowPrompt] = useState(true)
 
@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-      {/* 🌌 Background GIF from Imgur */}
+      {/* 🌌 Background GIF */}
       <div
         className="background-overlay"
         style={{ backgroundImage: `url('https://i.imgur.com/sft8diF.gif')` }}
@@ -36,7 +36,12 @@ function App() {
 
       <div className="app-container">
         <aside className="sidebar">
-          <h1 className="site-title">LLM Backtester Bot</h1>
+          <div className="sidebar-header">
+            <img src="/image.png" alt="Collapse Sidebar" className="sidebar-icon" />
+            <h1 className="site-title">FinTrack</h1>
+            <img src="/newchat.png" alt="New Chat" className="sidebar-icon" />
+          </div>
+
           {/* <History /> */}
         </aside>
 

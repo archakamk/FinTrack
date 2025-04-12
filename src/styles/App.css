@@ -41,18 +41,47 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
 }
 
+/* 🧩 ICONS + TITLE WRAPPER */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+/* 🧷 Collapse / New Chat Icons */
+.sidebar-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.sidebar-icon:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* 🏷️ Centered Title */
 .site-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 1.75rem;
   font-weight: 800;
   background: linear-gradient(to right, #38d9a9, #66ffe3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 2rem;
-  text-align: center;
+  margin: 0;
 }
 
+/* Main chat area */
 .main-panel {
   flex: 1;
   display: flex;
@@ -64,7 +93,7 @@ body {
   z-index: 2;
 }
 
-/* Center prompt and make it bold and big */
+/* Prompt */
 .prompt-banner {
   display: flex;
   align-items: center;
@@ -94,7 +123,6 @@ body {
   padding-bottom: 2rem;
 }
 
-/* ✅ Proper chat input box wrapper */
 .chat-box-wrapper {
   display: flex;
   justify-content: center;
@@ -114,6 +142,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* 🌌 Background Overlay */
 .background-overlay {
   position: fixed;
   top: 0;
