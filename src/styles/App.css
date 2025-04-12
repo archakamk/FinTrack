@@ -30,30 +30,58 @@ body {
   color: var(--color-text);
 }
 
-/* Option A: Frosted Sidebar */
 .sidebar {
   width: 280px;
   height: 100vh;
   padding: 2rem 1.5rem;
-  background-color: rgba(0, 0, 0, 0.45); /* more transparent */
+  background-color: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(16px);
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
   z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  position: relative;
 }
 
+/* 🧩 ICONS + TITLE WRAPPER */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+/* 🧷 Collapse / New Chat Icons */
+.sidebar-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.sidebar-icon:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* 🏷️ Centered Title */
 .site-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 1.75rem;
   font-weight: 800;
   background: linear-gradient(to right, #38d9a9, #66ffe3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 2rem;
-  text-align: center;
+  margin: 0;
 }
 
+/* Main chat area */
 .main-panel {
   flex: 1;
   display: flex;
@@ -65,17 +93,26 @@ body {
   z-index: 2;
 }
 
+/* Prompt */
 .prompt-banner {
-  text-align: center;
-  margin: 2rem 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
 }
 
 .prompt-text {
-  font-size: 2.5rem;
-  font-weight: 800;
+  font-size: 3rem;
+  font-weight: 900;
   background: linear-gradient(to right, #38d9a9, #66ffe3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.prompt-banner.hidden {
+  display: none;
 }
 
 .chat-area {
@@ -86,7 +123,6 @@ body {
   padding-bottom: 2rem;
 }
 
-/* ✅ Box around chat input */
 .chat-box-wrapper {
   display: flex;
   justify-content: center;
@@ -106,7 +142,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* 🌌 Background effect */
+/* 🌌 Background Overlay */
 .background-overlay {
   position: fixed;
   top: 0;
