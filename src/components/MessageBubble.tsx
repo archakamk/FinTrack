@@ -1,40 +1,14 @@
-import { useState } from 'react'
-
-interface ChatInputProps {
-  onSend: (message: string) => void
+interface MessageBubbleProps {
+  role: 'user' | 'bot';
+  text: string;
 }
 
-function ChatInput({ onSend }: ChatInputProps) {
-  const [input, setInput] = useState('')
-
-  const handleSend = () => {
-    if (input.trim()) {
-      onSend(input)
-      setInput('') 
-    }
-  }
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSend()
-    }
-  }
-
+function MessageBubble({ role, text }: MessageBubbleProps) {
   return (
-    <div className="chat-input-container">
-      <input
-        type="text"
-        className="chat-input-field"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder="e.g. Buy TSLA when RSI < 30"
-      />
-      <button className="chat-send-button" onClick={handleSend}>
-        Send
-      </button>
+    <div className={`message-bubble ${role}`}>
+      {text}
     </div>
-  )
+  );
 }
 
-export default ChatInput
+export default MessageBubble;
