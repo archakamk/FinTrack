@@ -14,3 +14,21 @@
   overflow-y: auto;
   background-color: #0f172a;
 }
+
+.top-bar {
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #334155;
+  background-color: #0f172a;
+  color: #38d9a9;
+}
+
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}

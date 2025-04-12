@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ChatInput from './components/ChatInput' 
+import ChatInput from './components/ChatInput'
 import MessageBubble from './components/MessageBubble'
 import History from './components/History'
 import Metrics from './components/Metrics'
@@ -23,6 +23,7 @@ function App() {
     <div className="app-container">
       <History />
       <main className="main-panel">
+        <header className="top-bar">LLM Backtester Bot</header>
         <div className="chat-area">
           {messages.map((msg, i) => (
             <MessageBubble key={i} role={msg.role} text={msg.text} />
