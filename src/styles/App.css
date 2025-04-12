@@ -24,21 +24,24 @@ body {
 .app-container {
   display: flex;
   height: 100vh;
-  background-color: transparent;
-  color: var(--color-text);
   position: relative;
   z-index: 1;
+  background-color: transparent;
+  color: var(--color-text);
 }
 
+/* Option A: Frosted Sidebar */
 .sidebar {
   width: 280px;
-  background-color: rgba(0, 0, 0, 0.6); /* translucent black */
-  padding: 1.5rem 1rem;
-  border-right: 1px solid #334155;
+  height: 100vh;
+  padding: 2rem 1.5rem;
+  background-color: rgba(0, 0, 0, 0.45); /* more transparent */
+  backdrop-filter: blur(16px);
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  z-index: 2;
-  backdrop-filter: blur(4px);
+  justify-content: flex-start;
 }
 
 .site-title {
@@ -64,13 +67,15 @@ body {
 
 .prompt-banner {
   text-align: center;
-  margin: 2rem 0 1rem;
+  margin: 2rem 0 1.5rem;
 }
 
 .prompt-text {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-accent);
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #38d9a9, #66ffe3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .chat-area {
@@ -81,7 +86,27 @@ body {
   padding-bottom: 2rem;
 }
 
-/* 🌌 Background using Imgur GIF */
+/* ✅ Box around chat input */
+.chat-box-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.chat-box-wrapper > .chat-input-wrapper {
+  width: 100%;
+  max-width: 900px;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 🌌 Background effect */
 .background-overlay {
   position: fixed;
   top: 0;
@@ -105,7 +130,6 @@ body {
   100% { transform: translate(0%, 0%); }
 }
 
-/* Button and anchor defaults */
 button {
   cursor: pointer;
   transition: all 0.2s ease-in-out;

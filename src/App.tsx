@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import ChatInput from './components/ChatInput'
+import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
-import History from './components/History'
-// import Metrics from './components/Metrics' // Hidden for now
+// import History from './components/History'
 import Spinner from './components/Spinner'
 import './styles/App.css'
 
@@ -21,13 +20,11 @@ function App() {
 
   return (
     <>
-      {/* 🌌 Animated background */}
-      <div className="background-overlay"></div>
+      <div className="background-overlay" />
 
       <div className="app-container">
         <aside className="sidebar">
           <h1 className="site-title">LLM Backtester Bot</h1>
-          <History />
         </aside>
 
         <main className="main-panel">
@@ -42,7 +39,9 @@ function App() {
             {loading && <Spinner />}
           </div>
 
-          <ChatInput onSend={handleSend} />
+          <div className="chat-box-wrapper">
+            <ChatInput onSend={handleSend} />
+          </div>
         </main>
       </div>
     </>
