@@ -1,9 +1,10 @@
 .app-container {
   display: flex;
   height: 100vh;
-  background-color: #0a192f;
+  background: radial-gradient(circle at top left, #0a192f 0%, #0f172a 100%);
   color: #ffffff;
   overflow: hidden;
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
 .main-panel {
@@ -12,16 +13,24 @@
   flex-direction: column;
   padding: 1rem;
   overflow-y: auto;
-  background-color: #0f172a;
+  background-color: transparent;
 }
 
 .top-bar {
-  font-size: 1.5rem;
-  font-weight: 600;
-  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem 1.5rem;
   border-bottom: 1px solid #334155;
-  background-color: #0f172a;
-  color: #38d9a9;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #38d9a9, #66ffe3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
 }
 
 .chat-area {
