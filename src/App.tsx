@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import ChatInput from './components/chatinput'
+import ChatInput from './components/ChatInput'
 import MessageBubble from './components/MessageBubble'
 // import History from './components/History'
 import Spinner from './components/Spinner'
@@ -9,6 +9,7 @@ function App() {
   const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string }[]>([])
   const [loading, setLoading] = useState(false)
   const [showPrompt, setShowPrompt] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
 
   const handleSend = (text: string) => {
     setMessages([...messages, { role: 'user', text }])
@@ -35,17 +36,39 @@ function App() {
       ></div>
 
       <div className="app-container">
-        <aside className="sidebar">
-          <div className="sidebar-header">
-            <img src="/image.png" alt="Collapse Sidebar" className="sidebar-icon" />
-            <h1 className="site-title">FinTrack</h1>
-            <img src="/newchat.png" alt="New Chat" className="sidebar-icon" />
-          </div>
+        {sidebarOpen && (
+          <aside className="sidebar">
+            <div className="sidebar-header">
+              <img
+                src="/image.png"
+                alt="Collapse Sidebar"
+                className="sidebar-icon"
+                onClick={() => setSidebarOpen(false)}
+              />
+              <h1 className="site-title">FinTrack</h1>
+              <img src="/newchat.png" alt="New Chat" className="sidebar-icon" />
+            </div>
+            {/* <History /> */}
+          </aside>
+        )}
 
-          {/* <History /> */}
-        </aside>
+        {!sidebarOpen && (
+          <img
+            src="/opensidebar.png"
+            alt="Open Sidebar"
+            className="open-sidebar-button"
+            onClick={() => setSidebarOpen(true)}
+          />
+        )}
 
         <main className="main-panel">
+          {/* 🔼 NAVBAR */}
+          <div className="top-navbar">
+            <img src="/Cropped_Image.png" className="nav-logo" alt="Logo" />
+            <span className="nav-link">About</span>
+            <span className="nav-link">Founders</span>
+          </div>
+
           {showPrompt && (
             <div className="prompt-banner">
               <h2 className="prompt-text fade-in">How can I help you?</h2>

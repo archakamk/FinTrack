@@ -44,7 +44,6 @@ body {
   position: relative;
 }
 
-/* 🧩 ICONS + TITLE WRAPPER */
 .sidebar-header {
   display: flex;
   justify-content: space-between;
@@ -54,7 +53,6 @@ body {
   position: relative;
 }
 
-/* 🧷 Collapse / New Chat Icons */
 .sidebar-icon {
   width: 28px;
   height: 28px;
@@ -68,7 +66,6 @@ body {
   opacity: 1;
 }
 
-/* 🏷️ Centered Title */
 .site-title {
   position: absolute;
   left: 50%;
@@ -81,7 +78,49 @@ body {
   margin: 0;
 }
 
-/* Main chat area */
+/* 👇 Reappearing open sidebar button */
+.open-sidebar-button {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.2s ease;
+}
+
+.open-sidebar-button:hover {
+  transform: scale(1.1);
+}
+
+/* 🔼 Top navbar styling */
+.top-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nav-logo {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 .main-panel {
   flex: 1;
   display: flex;
@@ -93,7 +132,6 @@ body {
   z-index: 2;
 }
 
-/* Prompt */
 .prompt-banner {
   display: flex;
   align-items: center;
@@ -142,7 +180,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* 🌌 Background Overlay */
 .background-overlay {
   position: fixed;
   top: 0;
