@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../styles/ChatInput.css' // Make sure file is named exactly like this
+import '../styles/chatinput.css' // Make sure file is named exactly like this
 
 function ChatInput({ onSend }: { onSend: (msg: string) => void }) {
   const [input, setInput] = useState('')
