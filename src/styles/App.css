@@ -226,12 +226,16 @@ body {
 }
 
 .history-item {
-  padding: 0.6rem 1rem;
-  margin-bottom: 0.3rem;
-  border-radius: 8px;
-  background-color: #334155;
+  padding: 0.6rem 1.25rem;
+  border-radius: 50px; /* Match the navbar bubble style */
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  font-weight: 500;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  color: white;
+  text-align: center;
 }
 
 .history-item:hover {
