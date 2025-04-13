@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
 // import History from './components/History'
@@ -10,6 +11,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [showPrompt, setShowPrompt] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(true)
+
+  const { loginWithRedirect } = useAuth0()
 
   const handleSend = (text: string) => {
     setMessages([...messages, { role: 'user', text }])
@@ -75,8 +78,13 @@ function App() {
 
             {/* Auth bubble aligned to top right */}
             <div className="auth-buttons">
-              <span className="auth-link">Login</span>
-              <span className="auth-link">Sign Up</span>
+              <span className="auth-link" onClick={() => loginWithRedirect()}>Login</span>
+              <span
+                className="auth-link"
+                onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+              >
+                Sign Up
+              </span>
             </div>
           </div>
 
