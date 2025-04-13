@@ -250,3 +250,19 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.about-page {
+  padding: 2rem;
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  color: var(--color-text);
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 3rem;
+}
