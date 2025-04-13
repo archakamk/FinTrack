@@ -9,8 +9,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
+        "https://fintrack-flax.vercel.app",  # Vercel deployment URL
         "http://localhost:5173",  # Vite default port
-        "http://127.0.0.1:5173"   # Some systems resolve as 127.0.0.1 instead
+        "http://127.0.0.1:5173",   # Some systems resolve as 127.0.0.1 instead
     ],
     allow_credentials=True,
     allow_methods=["*"],
