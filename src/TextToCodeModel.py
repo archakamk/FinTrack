@@ -83,7 +83,7 @@ trainer = SFTTrainer(
     data_collator=data_collator
 )
 
-#trainer.train()
+trainer.train()
 model.eval()
 
 while True:
