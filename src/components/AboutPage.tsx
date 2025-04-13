@@ -70,7 +70,7 @@ function AboutPage() {
           <p>Meet the team behind FinTrack:</p>
           <ul>
             <li><a href="https://www.linkedin.com/in/vishruthg/" target="_blank" rel="noopener noreferrer"><strong>Vishruth</strong></a> – Frontend</li>
-            <li><a href="https://www.linkedin.com/in/ronilmitra/" target="_blank" rel="noopener noreferrer"><strong>Ronil</strong></a> – Frontend & User Flow</li>
+            <li><a href="https://www.linkedin.com/in/ronilmitra/" target="_blank" rel="noopener noreferrer"><strong>Ronil</strong></a> – Frontend</li>
             <li><a href="https://www.linkedin.com/in/kalyan-archakam/" target="_blank" rel="noopener noreferrer"><strong>Kalyan</strong></a> – Backend</li>
             <li><a href="https://www.linkedin.com/in/sudhanva-deshpande-81a94a280/" target="_blank" rel="noopener noreferrer"><strong>Sudhanva</strong></a> – Backend</li>
             <li><a href="https://www.linkedin.com/in/navan-dendukuri-64a03b360/" target="_blank" rel="noopener noreferrer"><strong>Navan</strong></a> – Backend</li>
