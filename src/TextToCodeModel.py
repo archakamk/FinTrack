@@ -93,19 +93,18 @@ while True:
 
         formatted_prompt = f"<|user|>\n{prompt}\n<|assistant|>\n"
         inputs = tokenizer(formatted_prompt, return_tensors="pt").to(device)
+        streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
+
 
         output = model.generate(
             **inputs,
-            max_new_tokens=100000,
+            max_new_tokens=50000,
             do_sample=True,
             top_p=0.9,
             temperature=0.8,
-            repetition_penalty=1.1
+            repetition_penalty=1.1,
+            streamer=streamer
         )
-        
-        full_response = tokenizer.decode(output[0], skip_special_tokens=True)
-        split_token = "<|assistant|>"
-        response = full_response.split(split_token)[-1].strip() if split_token in full_response else full_response
 
 
 # Clear CUDA cache before loading models
