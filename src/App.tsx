@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
 import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
-// import Spinner from './components/Spinner'
 import './styles/App.css'
 
 function App() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const navigate = useNavigate()
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [showPrompt, setShowPrompt] = useState(true)
@@ -16,6 +16,8 @@ function App() {
   ])
   const [activeSessionId, setActiveSessionId] = useState(1)
   const activeSession = sessions.find(s => s.id === activeSessionId)!
+
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const handleSend = (text: string) => {
     const newMessage = { role: 'user' as const, text }
@@ -39,15 +41,21 @@ function App() {
     setShowPrompt(true)
   }
 
-  // Smooth pause/resume with Page Visibility API
   useEffect(() => {
     const handleVisibility = () => {
       if (videoRef.current) {
-        document.hidden ? videoRef.current.pause() : videoRef.current.play()
+        if (document.visibilityState === 'visible') {
+          videoRef.current.play().catch(() => {})
+        } else {
+          videoRef.current.pause()
+        }
       }
     }
+
     document.addEventListener('visibilitychange', handleVisibility)
-    return () => document.removeEventListener('visibilitychange', handleVisibility)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
   }, [])
 
   return (
@@ -107,10 +115,16 @@ function App() {
         <main className="main-panel">
           <div className="top-ui-wrapper">
             <div className="top-navbar">
-              <img src="/Cropped_Image.png" className="nav-logo" alt="Logo" />
-              <span className="nav-link">About</span>
-              <span className="nav-link">Founders</span>
+              <img
+                src="/Cropped_Image.png"
+                className="nav-logo"
+                alt="Logo"
+                onClick={() => navigate('/')}
+              />
+              <span className="nav-link" onClick={() => navigate('/about')}>About</span>
+              <span className="nav-link" onClick={() => navigate('/about#founders')}>Founders</span>
             </div>
+
             <div className="auth-buttons">
               {!isAuthenticated ? (
                 <>
