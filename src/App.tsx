@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
@@ -7,6 +7,7 @@ import './styles/App.css'
 
 function App() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [showPrompt, setShowPrompt] = useState(true)
@@ -38,12 +39,28 @@ function App() {
     setShowPrompt(true)
   }
 
+  // Smooth pause/resume with Page Visibility API
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (videoRef.current) {
+        document.hidden ? videoRef.current.pause() : videoRef.current.play()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => document.removeEventListener('visibilitychange', handleVisibility)
+  }, [])
+
   return (
     <>
-      <div
-        className="background-overlay"
-        style={{ backgroundImage: `url('https://i.imgur.com/sft8diF.gif')` }}
-      ></div>
+      <video
+        ref={videoRef}
+        className="background-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+        src="https://i.imgur.com/RCoLmZ9.mp4"
+      />
 
       <div className="app-container">
         {sidebarOpen && (
@@ -125,7 +142,6 @@ function App() {
             {activeSession.messages.map((msg, i) => (
               <MessageBubble key={i} role={msg.role} text={msg.text} />
             ))}
-            {/* <Spinner /> */}
           </div>
 
           <div className="chat-box-wrapper">
