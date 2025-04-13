@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from backend.gemini import generate_answer  # ✅ This should be your Gemini function
+from gemini import generate_answer 
 
 app = FastAPI()
 
