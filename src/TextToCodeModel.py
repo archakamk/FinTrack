@@ -1,4 +1,4 @@
-'''from datasets import load_dataset
+from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, TextStreamer, DataCollatorForLanguageModeling
 from peft import LoraConfig, get_peft_model, TaskType
 from trl import SFTTrainer
@@ -21,7 +21,7 @@ def format_example(example):
 
 dataset = dataset.map(format_example)
 dataset = dataset.filter(lambda x: x["text"] is not None and len(x["text"]) > 0)
-dataset = dataset.shuffle(seed=42).select(range(10_000))
+dataset = dataset.shuffle(seed=42).select(range(30_000))
 
 tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",token="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")
 
@@ -94,79 +94,19 @@ while True:
         formatted_prompt = f"<|user|>\n{prompt}\n<|assistant|>\n"
         inputs = tokenizer(formatted_prompt, return_tensors="pt").to(device)
 
-        streamer = TextStreamer(tokenizer, skip_prompt=True, skip_special_tokens=True)
-
-        _ = model.generate(
+        output = model.generate(
             **inputs,
             max_new_tokens=100000,
             do_sample=True,
             top_p=0.9,
             temperature=0.8,
-            repetition_penalty=1.1,
-            streamer=streamer
+            repetition_penalty=1.1
         )
-
+        
+        full_response = tokenizer.decode(output[0], skip_special_tokens=True)
+        split_token = "<|assistant|>"
+        response = full_response.split(split_token)[-1].strip() if split_token in full_response else full_response
 
 
 # Clear CUDA cache before loading models
-torch.cuda.empty_cache()'''
-
-from flask import Flask, request, jsonify
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import torch
-from peft import LoraConfig, get_peft_model, TaskType
-
-from flask_cors import CORS
-app = Flask(__name__)
-CORS(app)
-
-
-# Load model and tokenizer
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-7B", token="your_token_here")
-tokenizer.add_special_tokens({'additional_special_tokens': ["<|user|>", "<|assistant|>"]})
-
-model = AutoModelForCausalLM.from_pretrained(
-    "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B", 
-    token="your_token_here",
-    device_map="auto",
-    torch_dtype=torch.float16
-)
-model.resize_token_embeddings(len(tokenizer))
-
-lora_config = LoraConfig(
-    r=8,
-    lora_alpha=32,
-    target_modules=["q_proj", "v_proj"],
-    lora_dropout=0.1,
-    bias="none",
-    task_type=TaskType.CAUSAL_LM
-)
-model = get_peft_model(model, lora_config)
-model.eval()
-
-@app.route("/ask", methods=["POST"])
-def ask():
-    data = request.get_json()
-    prompt = data.get("prompt", "")
-    if prompt.lower() == "exit":
-        return jsonify({"response": "Session ended."})
-
-    formatted_prompt = f"<|user|>\n{prompt}\n<|assistant|>\n"
-    inputs = tokenizer(formatted_prompt, return_tensors="pt").to(device)
-
-    output = model.generate(
-        **inputs,
-        max_new_tokens=512,
-        do_sample=True,
-        top_p=0.9,
-        temperature=0.8,
-        repetition_penalty=1.1
-    )
-
-    response = tokenizer.decode(output[0], skip_special_tokens=True)
-    return jsonify({"response": response})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+torch.cuda.empty_cache()
