@@ -180,12 +180,13 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 8rem;
   overflow-y: auto;
   background-color: transparent;
   position: relative;
   z-index: 2;
 }
+
 
 /* 💬 Prompt */
 .prompt-banner {
@@ -224,7 +225,14 @@ body {
   display: flex;
   justify-content: center;
   padding: 1.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 280px; /* width of your sidebar */
+  right: 0;
+  z-index: 3;
+  background: linear-gradient(to top, rgba(10, 25, 47, 0.95), transparent); /* optional: smooth fade */
 }
+
 .chat-box-wrapper > .chat-input-wrapper {
   width: 100%;
   max-width: 900px;
