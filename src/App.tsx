@@ -5,23 +5,25 @@ import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
 import './styles/App.css'
 
+type Message = { role: 'user' | 'bot'; text: string }
+type Session = { id: number; title: string; messages: Message[] }
+
 function App() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
   const navigate = useNavigate()
 
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [showPrompt, setShowPrompt] = useState(true)
-  const [sessions, setSessions] = useState<{ id: number; title: string; messages: { role: 'user' | 'bot'; text: string }[] }[]>([
-    { id: 1, title: 'Session 1', messages: [] },
+  const [sessions, setSessions] = useState<Session[]>([
+    { id: 1, title: 'Session 1', messages: [] }
   ])
   const [activeSessionId, setActiveSessionId] = useState(1)
-  const activeSession = sessions.find(s => s.id === activeSessionId)!
-
+  const activeSession = sessions.find(s => s.id === activeSessionId) || sessions[0]
   const videoRef = useRef<HTMLVideoElement>(null)
 
   const handleSend = (text: string) => {
-    const newMessage = { role: 'user' as const, text }
-    const newBotMessage = { role: 'bot' as const, text: `Echoing: ${text}` }
+    const newMessage: Message = { role: 'user', text }
+    const newBotMessage: Message = { role: 'bot', text: `Echoing: ${text}` }
 
     setSessions(prev =>
       prev.map(session =>
@@ -35,11 +37,35 @@ function App() {
 
   const handleNewChat = () => {
     const newId = sessions.length + 1
-    const newSession = { id: newId, title: `Session ${newId}`, messages: [] }
+    const newSession: Session = { id: newId, title: `Session ${newId}`, messages: [] }
     setSessions(prev => [newSession, ...prev])
     setActiveSessionId(newId)
     setShowPrompt(true)
   }
+
+  // ✨ Suggestion rotation
+  const suggestions = [
+    'Enter a stock trading strategy...',
+    'Backtest a moving average crossover...',
+    'Analyze S&P 500 signals...',
+    'Try a momentum-based portfolio...',
+    'Run a mean reversion strategy...',
+    'Backtest Bollinger Band breakouts...'
+  ]
+  const [currentSuggestion, setCurrentSuggestion] = useState(suggestions[0])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSuggestion(prev => {
+        let next = prev
+        while (next === prev) {
+          next = suggestions[Math.floor(Math.random() * suggestions.length)]
+        }
+        return next
+      })
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     const handleVisibility = () => {
@@ -149,6 +175,7 @@ function App() {
           {showPrompt && (
             <div className="prompt-banner">
               <h2 className="prompt-text fade-in">How can I help you?</h2>
+              <p className="suggestion-text">{currentSuggestion}</p>
             </div>
           )}
 
