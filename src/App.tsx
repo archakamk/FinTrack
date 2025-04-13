@@ -33,7 +33,7 @@ function App() {
     setShowPrompt(false)
 
     try {
-      const res = await fetch('http://localhost:8000/generate-strategy', {
+      const res = await fetch('https://fintrack-backend-8dji.onrender.com/generate-strategy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_input: text })
