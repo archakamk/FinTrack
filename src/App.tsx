@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
 // import History from './components/History'
@@ -10,6 +11,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [showPrompt, setShowPrompt] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(true)
+
+  const { loginWithRedirect } = useAuth0()
 
   const handleSend = (text: string) => {
     setMessages([...messages, { role: 'user', text }])
@@ -36,6 +39,7 @@ function App() {
       ></div>
 
       <div className="app-container">
+        {/* Sidebar */}
         {sidebarOpen && (
           <aside className="sidebar">
             <div className="sidebar-header">
@@ -61,20 +65,37 @@ function App() {
           />
         )}
 
+        {/* Main Panel */}
         <main className="main-panel">
-          {/* 🔼 NAVBAR */}
-          <div className="top-navbar">
-            <img src="/Cropped_Image.png" className="nav-logo" alt="Logo" />
-            <span className="nav-link">About</span>
-            <span className="nav-link">Founders</span>
+          {/* 🔼 Combined top UI wrapper */}
+          <div className="top-ui-wrapper">
+            {/* Centered Navigation */}
+            <div className="top-navbar">
+              <img src="/Cropped_Image.png" className="nav-logo" alt="Logo" />
+              <span className="nav-link">About</span>
+              <span className="nav-link">Founders</span>
+            </div>
+
+            {/* Auth bubble aligned to top right */}
+            <div className="auth-buttons">
+              <span className="auth-link" onClick={() => loginWithRedirect()}>Login</span>
+              <span
+                className="auth-link"
+                onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
+              >
+                Sign Up
+              </span>
+            </div>
           </div>
 
+          {/* Prompt */}
           {showPrompt && (
             <div className="prompt-banner">
               <h2 className="prompt-text fade-in">How can I help you?</h2>
             </div>
           )}
 
+          {/* Messages */}
           <div className="chat-area">
             {messages.map((msg, i) => (
               <MessageBubble key={i} role={msg.role} text={msg.text} />
@@ -82,6 +103,7 @@ function App() {
             {loading && <Spinner />}
           </div>
 
+          {/* Chat input */}
           <div className="chat-box-wrapper">
             <ChatInput onSend={handleSend} />
           </div>

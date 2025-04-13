@@ -78,7 +78,6 @@ body {
   margin: 0;
 }
 
-/* 👇 Reappearing open sidebar button */
 .open-sidebar-button {
   position: absolute;
   top: 1.5rem;
@@ -94,19 +93,24 @@ body {
   transform: scale(1.1);
 }
 
-/* 🔼 Top navbar styling */
+/* 🔼 UI Top bar wrapper */
+.top-ui-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+}
+
+/* ✅ Centered NAVBAR BUBBLE */
 .top-navbar {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 2rem;
-  margin-bottom: 2rem;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 .nav-logo {
@@ -116,6 +120,21 @@ body {
 }
 
 .nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ✨ TOP RIGHT Login/Signup BUBBLE */
+.auth-buttons {
+  display: flex;
+  gap: 2rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+}
+
+.auth-link {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -180,6 +199,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* 🌌 Background Overlay */
 .background-overlay {
   position: fixed;
   top: 0;
