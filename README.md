@@ -53,6 +53,7 @@ This will start the React development server at [http://localhost:3000](http://l
 3. The fine-tuned DeepSeek model processes your input and returns a Python script.
 4. You receive:
    - 🐍 Generated Python code
+   - 📘 Instructions on how to run a backtest
 ---
 
 ## 💡 Example
