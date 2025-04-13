@@ -22,6 +22,20 @@ body {
   overflow: hidden;
 }
 
+/* 🎥 MP4 Background Video Overlay */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.15;
+  filter: blur(5px) brightness(0.9);
+  pointer-events: none;
+}
+
 .app-container {
   display: flex;
   height: 100vh;
@@ -229,30 +243,6 @@ body {
   background-color: #38d9a9;
   color: #0f172a;
   font-weight: 600;
-}
-
-/* BACKGROUND ANIMATION */
-.background-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('https://i.imgur.com/sft8diF.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.15;
-  filter: blur(5px) brightness(0.9);
-  animation: float-bg 60s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-@keyframes float-bg {
-  0% { transform: translate(0%, 0%); }
-  50% { transform: translate(1.5%, 1.5%); }
-  100% { transform: translate(0%, 0%); }
 }
 
 /* UTILITY */
