@@ -2,44 +2,50 @@ import { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import ChatInput from './components/chatinput'
 import MessageBubble from './components/MessageBubble'
-// import History from './components/History'
-import Spinner from './components/Spinner'
+// import Spinner from './components/Spinner'
 import './styles/App.css'
 
 function App() {
-  const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string }[]>([])
-  const [loading, setLoading] = useState(false)
-  const [showPrompt, setShowPrompt] = useState(true)
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0()
 
-  const { loginWithRedirect } = useAuth0()
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [showPrompt, setShowPrompt] = useState(true)
+  const [sessions, setSessions] = useState<{ id: number; title: string; messages: { role: 'user' | 'bot'; text: string }[] }[]>([
+    { id: 1, title: 'Session 1', messages: [] },
+  ])
+  const [activeSessionId, setActiveSessionId] = useState(1)
+  const activeSession = sessions.find(s => s.id === activeSessionId)!
 
   const handleSend = (text: string) => {
-    setMessages([...messages, { role: 'user', text }])
-    setLoading(true)
+    const newMessage = { role: 'user' as const, text }
+    const newBotMessage = { role: 'bot' as const, text: `Echoing: ${text}` }
+
+    setSessions(prev =>
+      prev.map(session =>
+        session.id === activeSessionId
+          ? { ...session, messages: [...session.messages, newMessage, newBotMessage] }
+          : session
+      )
+    )
     setShowPrompt(false)
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'bot', text: `Echoing: ${text}` }])
-      setLoading(false)
-    }, 1000)
   }
 
-  useEffect(() => {
-    if (messages.length > 0) {
-      setShowPrompt(false)
-    }
-  }, [messages])
+  const handleNewChat = () => {
+    const newId = sessions.length + 1
+    const newSession = { id: newId, title: `Session ${newId}`, messages: [] }
+    setSessions(prev => [newSession, ...prev])
+    setActiveSessionId(newId)
+    setShowPrompt(true)
+  }
 
   return (
     <>
-      {/* 🌌 Background GIF */}
       <div
         className="background-overlay"
         style={{ backgroundImage: `url('https://i.imgur.com/sft8diF.gif')` }}
       ></div>
 
       <div className="app-container">
-        {/* Sidebar */}
         {sidebarOpen && (
           <aside className="sidebar">
             <div className="sidebar-header">
@@ -50,9 +56,25 @@ function App() {
                 onClick={() => setSidebarOpen(false)}
               />
               <h1 className="site-title">FinTrack</h1>
-              <img src="/newchat.png" alt="New Chat" className="sidebar-icon" />
+              <img
+                src="/newchat.png"
+                alt="New Chat"
+                className="sidebar-icon"
+                onClick={handleNewChat}
+              />
             </div>
-            {/* <History /> */}
+
+            <div className="history-list">
+              {sessions.map(session => (
+                <div
+                  key={session.id}
+                  className={`history-item ${session.id === activeSessionId ? 'active' : ''}`}
+                  onClick={() => setActiveSessionId(session.id)}
+                >
+                  {session.title}
+                </div>
+              ))}
+            </div>
           </aside>
         )}
 
@@ -65,45 +87,47 @@ function App() {
           />
         )}
 
-        {/* Main Panel */}
         <main className="main-panel">
-          {/* 🔼 Combined top UI wrapper */}
           <div className="top-ui-wrapper">
-            {/* Centered Navigation */}
             <div className="top-navbar">
               <img src="/Cropped_Image.png" className="nav-logo" alt="Logo" />
               <span className="nav-link">About</span>
               <span className="nav-link">Founders</span>
             </div>
-
-            {/* Auth bubble aligned to top right */}
             <div className="auth-buttons">
-              <span className="auth-link" onClick={() => loginWithRedirect()}>Login</span>
-              <span
-                className="auth-link"
-                onClick={() => loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })}
-              >
-                Sign Up
-              </span>
+              {!isAuthenticated ? (
+                <>
+                  <span className="auth-link" onClick={() => loginWithRedirect()}>Login</span>
+                  <span
+                    className="auth-link"
+                    onClick={() =>
+                      loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })
+                    }
+                  >
+                    Sign Up
+                  </span>
+                </>
+              ) : (
+                <span className="auth-link" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                  Log Out
+                </span>
+              )}
             </div>
           </div>
 
-          {/* Prompt */}
           {showPrompt && (
             <div className="prompt-banner">
               <h2 className="prompt-text fade-in">How can I help you?</h2>
             </div>
           )}
 
-          {/* Messages */}
           <div className="chat-area">
-            {messages.map((msg, i) => (
+            {activeSession.messages.map((msg, i) => (
               <MessageBubble key={i} role={msg.role} text={msg.text} />
             ))}
-            {loading && <Spinner />}
+            {/* <Spinner /> */}
           </div>
 
-          {/* Chat input */}
           <div className="chat-box-wrapper">
             <ChatInput onSend={handleSend} />
           </div>
