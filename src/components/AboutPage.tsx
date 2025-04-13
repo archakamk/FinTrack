@@ -18,6 +18,7 @@ function AboutPage() {
   return (
     <div className="about-page">
       {/* 🔼 Exact same top layout */}
+      <main className="main-panel">
       <div className="top-ui-wrapper">
         <div className="top-navbar">
           <img
@@ -29,6 +30,8 @@ function AboutPage() {
           <span className="nav-link" onClick={() => navigate('/about')}>About</span>
           <span className="nav-link" onClick={() => navigate('/about#founders')}>Founders</span>
         </div>
+
+        
 
         <div className="auth-buttons">
           {!isAuthenticated ? (
@@ -66,6 +69,9 @@ function AboutPage() {
           <p>Meet the amazing team behind FinTrack! 🚀</p>
         </div>
       </div>
+        </main>
+    
+        {/* Footer */}
     </div>
   )
 }
