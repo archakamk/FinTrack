@@ -21,18 +21,45 @@ function App() {
   const activeSession = sessions.find(s => s.id === activeSessionId) || sessions[0]
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const handleSend = (text: string) => {
-    const newMessage: Message = { role: 'user', text }
-    const newBotMessage: Message = { role: 'bot', text: `Echoing: ${text}` }
-
+  const handleSend = async (text: string) => {
+    const userMessage: Message = { role: 'user', text }
     setSessions(prev =>
       prev.map(session =>
         session.id === activeSessionId
-          ? { ...session, messages: [...session.messages, newMessage, newBotMessage] }
+          ? { ...session, messages: [...session.messages, userMessage] }
           : session
       )
     )
     setShowPrompt(false)
+
+    try {
+      const res = await fetch('http://localhost:8000/generate-strategy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_input: text })
+      });
+
+      const data = await res.json()
+      const botText = data.strategy_code || data.error || 'Error: Empty response.'
+
+      const botMessage: Message = { role: 'bot', text: botText }
+      setSessions(prev =>
+        prev.map(session =>
+          session.id === activeSessionId
+            ? { ...session, messages: [...session.messages, botMessage] }
+            : session
+        )
+      )
+    } catch (err) {
+      const errorMessage: Message = { role: 'bot', text: '⚠️ Error: Failed to connect to server.' }
+      setSessions(prev =>
+        prev.map(session =>
+          session.id === activeSessionId
+            ? { ...session, messages: [...session.messages, errorMessage] }
+            : session
+        )
+      )
+    }
   }
 
   const handleNewChat = () => {
@@ -43,7 +70,6 @@ function App() {
     setShowPrompt(true)
   }
 
-  // ✨ Suggestion rotation
   const suggestions = [
     'Enter a stock trading strategy...',
     'Backtest a moving average crossover...',
