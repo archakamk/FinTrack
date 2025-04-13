@@ -7,10 +7,10 @@
   --color-text: #ffffff;
   --color-muted: #9ca3af;
   --color-error: #ef4444;
-
   font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
+/* Reset */
 body {
   margin: 0;
   padding: 0;
@@ -22,7 +22,7 @@ body {
   overflow: hidden;
 }
 
-/* 🎥 MP4 Background Video Overlay */
+/* 🎥 Background video */
 .background-video {
   position: fixed;
   top: 0;
@@ -36,6 +36,7 @@ body {
   pointer-events: none;
 }
 
+/* Layout */
 .app-container {
   display: flex;
   height: 100vh;
@@ -45,7 +46,7 @@ body {
   color: var(--color-text);
 }
 
-/* SIDEBAR */
+/* Sidebar */
 .sidebar {
   width: 280px;
   height: 100vh;
@@ -76,7 +77,6 @@ body {
   opacity: 0.9;
   transition: transform 0.2s ease;
 }
-
 .sidebar-icon:hover {
   transform: scale(1.1);
   opacity: 1;
@@ -104,12 +104,36 @@ body {
   z-index: 3;
   transition: transform 0.2s ease;
 }
-
 .open-sidebar-button:hover {
   transform: scale(1.1);
 }
 
-/* 🔼 UI Top bar wrapper */
+/* 🧠 Session History */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.history-item {
+  padding: 0.6rem 1rem;
+  border-radius: 999px; /* bubble style */
+  background-color: rgba(51, 65, 85, 0.8);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: center;
+}
+.history-item:hover {
+  background-color: #38d9a9;
+  color: #0f172a;
+}
+.history-item.active {
+  background-color: #38d9a9;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* 🔼 Top navbar */
 .top-ui-wrapper {
   display: flex;
   align-items: center;
@@ -117,8 +141,6 @@ body {
   margin-bottom: 2rem;
   padding: 0 2rem;
 }
-
-/* ✅ Centered NAVBAR BUBBLE */
 .top-navbar {
   display: flex;
   align-items: center;
@@ -128,20 +150,18 @@ body {
   border-radius: 50px;
   margin: 0 auto;
 }
-
 .nav-logo {
   width: 32px;
   height: 32px;
   cursor: pointer;
 }
-
 .nav-link {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
 }
 
-/* ✨ TOP RIGHT Login/Signup BUBBLE */
+/* 🔐 Auth buttons */
 .auth-buttons {
   display: flex;
   gap: 2rem;
@@ -149,14 +169,13 @@ body {
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
 }
-
 .auth-link {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
 }
 
-/* MAIN PANEL */
+/* 👨‍💻 Main */
 .main-panel {
   flex: 1;
   display: flex;
@@ -168,15 +187,15 @@ body {
   z-index: 2;
 }
 
-/* PROMPT TEXT */
+/* 💬 Prompt */
 .prompt-banner {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   min-height: 300px;
 }
-
 .prompt-text {
   font-size: 3rem;
   font-weight: 900;
@@ -185,12 +204,13 @@ body {
   -webkit-text-fill-color: transparent;
   text-align: center;
 }
-
-.prompt-banner.hidden {
-  display: none;
+.suggestion-text {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  margin-top: 1rem;
 }
 
-/* CHAT */
+/* 💬 Chat area */
 .chat-area {
   flex: 1;
   display: flex;
@@ -199,12 +219,12 @@ body {
   padding-bottom: 2rem;
 }
 
+/* 📝 Chat box */
 .chat-box-wrapper {
   display: flex;
   justify-content: center;
   padding: 1.5rem;
 }
-
 .chat-box-wrapper > .chat-input-wrapper {
   width: 100%;
   max-width: 900px;
@@ -218,48 +238,15 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* HISTORY LIST */
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.history-item {
-  padding: 0.6rem 1.25rem;
-  border-radius: 50px; /* Match the navbar bubble style */
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-  font-weight: 500;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: white;
-  text-align: center;
-}
-
-.history-item:hover {
-  background-color: #38d9a9;
-  color: #0f172a;
-}
-
-.history-item.active {
-  background-color: #38d9a9;
-  color: #0f172a;
-  font-weight: 600;
-}
-
-/* UTILITY */
+/* 🌐 Utility */
 button {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
 a {
   color: var(--color-accent);
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
 }
