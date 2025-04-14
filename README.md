@@ -126,5 +126,3 @@ Pull requests and feedback are welcome! Help us make this tool better for trader
 This project is licensed under the MIT License.
 
 ---
-
-> Let me know if you want to include screenshots, example prompts, or GitHub badges at the top for a more polished repo!
