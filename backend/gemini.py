@@ -10,7 +10,7 @@ from datetime import datetime
 
 # Configure the Generative AI model
 MODEL_ID = "models/gemini-2.0-flash"
-API_KEY = "AIzaSyAF1EVzv6w35sDE6mj0KBUyd0ojUUx38EE"
+API_KEY = "ENTER API_KEY HERE"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel(MODEL_ID)
 
