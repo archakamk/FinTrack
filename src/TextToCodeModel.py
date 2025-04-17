@@ -23,7 +23,7 @@ dataset = dataset.map(format_example)
 dataset = dataset.filter(lambda x: x["text"] is not None and len(x["text"]) > 0)
 dataset = dataset.shuffle(seed=42).select(range(30_000))
 
-tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",token="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")
+tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-7B")
 
 tokenizer.add_special_tokens({'additional_special_tokens': ["<|user|>", "<|assistant|>"]})
 
@@ -32,7 +32,7 @@ data_collator = DataCollatorForLanguageModeling(
     mlm=False  # Causal LM, so no masked LM
 )
 
-model = AutoModelForCausalLM.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",token="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",device_map="cuda",torch_dtype=torch.float16)
+model = AutoModelForCausalLM.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",device_map="cuda",torch_dtype=torch.float16)
 
 model.resize_token_embeddings(len(tokenizer))
 
