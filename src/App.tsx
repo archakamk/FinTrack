@@ -18,6 +18,7 @@ function App() {
     { id: 1, title: 'Session 1', messages: [] }
   ])
   const [activeSessionId, setActiveSessionId] = useState(1)
+  const [dropdownOpenId, setDropdownOpenId] = useState<number | null>(null)
   const activeSession = sessions.find(s => s.id === activeSessionId) || sessions[0]
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -37,7 +38,7 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_input: text })
-      });
+      })
 
       const data = await res.json()
       const botText = data.strategy_code || data.error || 'Error: Empty response.'
@@ -68,6 +69,21 @@ function App() {
     setSessions(prev => [newSession, ...prev])
     setActiveSessionId(newId)
     setShowPrompt(true)
+  }
+
+  const handleDeleteSession = (id: number) => {
+    setSessions(prev => prev.filter(session => session.id !== id))
+    if (id === activeSessionId) {
+      const remaining = sessions.filter(s => s.id !== id)
+      if (remaining.length > 0) {
+        setActiveSessionId(remaining[0].id)
+      } else {
+        const newSession: Session = { id: 1, title: 'Session 1', messages: [] }
+        setSessions([newSession])
+        setActiveSessionId(1)
+        setShowPrompt(true)
+      }
+    }
   }
 
   const suggestions = [
@@ -122,7 +138,7 @@ function App() {
         src="https://i.imgur.com/RCoLmZ9.mp4"
       />
 
-      <div className="app-container">
+      <div className={`app-container ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
         {sidebarOpen && (
           <aside className="sidebar">
             <div className="sidebar-header">
@@ -145,10 +161,27 @@ function App() {
               {sessions.map(session => (
                 <div
                   key={session.id}
-                  className={`history-item ${session.id === activeSessionId ? 'active' : ''}`}
-                  onClick={() => setActiveSessionId(session.id)}
+                  className={`history-item-wrapper ${session.id === activeSessionId ? 'active' : ''}`}
+                  onMouseLeave={() => setDropdownOpenId(null)}
                 >
-                  {session.title}
+                  <div className="history-item" onClick={() => setActiveSessionId(session.id)}>
+                    {session.title}
+                  </div>
+                  <div
+                    className="session-options"
+                    onClick={() =>
+                      setDropdownOpenId(prev => (prev === session.id ? null : session.id))
+                    }
+                  >
+                    ⋮
+                  </div>
+                  {dropdownOpenId === session.id && (
+                    <div className="dropdown">
+                      <div className="dropdown-item" onClick={() => handleDeleteSession(session.id)}>
+                        Delete
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -180,9 +213,10 @@ function App() {
             <div className="auth-buttons">
               {!isAuthenticated ? (
                 <>
-                  <span className="auth-link" onClick={() => loginWithRedirect()}>Login</span>
+                  <span className="auth-link" style={{ cursor: 'pointer' }} onClick={() => loginWithRedirect()}>Login</span>
                   <span
                     className="auth-link"
+                    style={{ cursor: 'pointer' }}
                     onClick={() =>
                       loginWithRedirect({ authorizationParams: { screen_hint: 'signup' } })
                     }
@@ -191,7 +225,7 @@ function App() {
                   </span>
                 </>
               ) : (
-                <span className="auth-link" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                <span className="auth-link" style={{ cursor: 'pointer' }} onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
                   Log Out
                 </span>
               )}
