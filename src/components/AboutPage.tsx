@@ -41,7 +41,6 @@ function AboutPage() {
         src="https://i.imgur.com/RCoLmZ9.mp4"
       />
 
-      {/* 🔼 Top navbar centered like on home screen */}
       <div className="about-navbar-wrapper">
         <div className="top-navbar">
           <img
@@ -74,6 +73,7 @@ function AboutPage() {
             <li><a href="https://www.linkedin.com/in/kalyan-archakam/" target="_blank" rel="noopener noreferrer"><strong>Kalyan</strong></a> – Backend</li>
             <li><a href="https://www.linkedin.com/in/sudhanva-deshpande-81a94a280/" target="_blank" rel="noopener noreferrer"><strong>Sudhanva</strong></a> – Backend</li>
             <li><a href="https://www.linkedin.com/in/navan-dendukuri-64a03b360/" target="_blank" rel="noopener noreferrer"><strong>Navan</strong></a> – Backend</li>
+            <li><a href="https://www.linkedin.com/in/nithin-nagarajan-2b1278315/" target="_blank" rel="noopener noreferrer"><strong>Nithin</strong></a> – Database</li>
           </ul>
         </section>
       </div>
