@@ -14,9 +14,12 @@
   /* 🔼 Centered NAVBAR on AboutPage */
   .about-navbar-wrapper {
     position: fixed;
-    top: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0; /* change from 1.5rem to 0 */
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 2rem 0.5rem;
+    display: flex;
+    justify-content: center;
     z-index: 5;
   }
   
